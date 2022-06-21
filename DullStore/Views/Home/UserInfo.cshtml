@@ -1,0 +1,54 @@
+﻿@model IEnumerable<DullStore.Entities.GioHang>
+
+@{
+    ViewBag.Title = "UserInfo";
+    Layout = "~/Views/Shared/_LayoutChinh.cshtml";
+}
+
+
+<div class="row">
+    <div class="span9">
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index">Trang chủ</a> <span class="divider">/</span></li>
+            <li class="active">Giỏ hàng</li>
+        </ul>
+        <div class="well well-small">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ma)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ngaydathang)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ngaygiaohang)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.tinhtranggiaohang)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ma)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ngaydathang)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ngaygiaohang)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tinhtranggiaohang)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>

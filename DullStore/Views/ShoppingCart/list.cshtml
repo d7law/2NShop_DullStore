@@ -52,47 +52,61 @@
                     }
                 </tbody>
             </table><br />
-            @using (Html.BeginForm("DatHang", "ShoppingCart"))
+            @if (Session["FullName"] != null)
             {
-                <div class="form-horizontal">
-                    <h4>Khách hàng</h4>
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="control-group">
-                        <label class="control-label">Họ và tên <sup>*</sup></label>
-                        <div class="col-md-10">
-                            <input type="text" name="ten" />
+                <div class="">
+                @using (Html.BeginForm("DatHang", "ShoppingCart"))
+                {
+                    <div class="form-horizontal">
+                        <h4>Khách hàng</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="control-group">
+                            <label class="control-label">Họ và tên <sup>*</sup></label>
+                            <div class="col-md-10">
+                                <input type="text" name="ten" value="@Session["Fullname"].ToString()" readonly="true" />
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="control-group">
-                        <label class="control-label">Email <sup>*</sup></label>
-                        <div class="col-md-10">
-                            <input type="text" name="email" />
+                        <div class="control-group">
+                            <label class="control-label">Email <sup>*</sup></label>
+                            <div class="col-md-10">
+                                <input type="text" name="email" value="@Session["Email"].ToString()" readonly="true" />
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="control-group">
-                        <label class="control-label">Địa chỉ <sup>*</sup></label>
-                        <div class="col-md-10">
-                            <input type="text" name="diachi" />
+                        <div class="control-group">
+                            <label class="control-label">Địa chỉ <sup>*</sup></label>
+                            <div class="col-md-10">
+                                <input type="text" name="diachi" />
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="control-group">
-                        <label class="control-label">Số điện thoại <sup>*</sup></label>
-                        <div class="col-md-10">
-                            <input type="text" name="sdt" />
+                        <div class="control-group">
+                            <label class="control-label">Số điện thoại <sup>*</sup></label>
+                            <div class="col-md-10">
+                                <input type="text" name="sdt" />
+                            </div>
+                        </div>
+@*                        <div class="control-group">
+                            <label class="control-label">Password <sup>*</sup></label>
+                            <div class="col-md-10">
+                                <input type="text" name="password"  />
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Tiếp" class="shopBtn btn-large pull-right" onclick="return alert('Đặt hàng thành công!! Oder của bạn sẽ được giao')" />
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Tiếp" class="shopBtn btn-large pull-right" onclick="return alert('Đặt hàng thành công!! Oder của bạn sẽ được giao')" />
-                        </div>
+                }
+                <a href="/ShoppingCart/list" class="shopBtn btn-large">Trở lại </a>
                     </div>
-                </div>
+            } else
+            {
+                <h4>Bạn hãy đăng nhập để đặt hàng</h4>
             }
-            <a href="/ShoppingCart/list" class="shopBtn btn-large"> </span> Trở lại </a>
         </div>
     </div>
 </div>

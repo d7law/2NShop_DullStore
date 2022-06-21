@@ -59,7 +59,7 @@ namespace DullStore.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
         [HttpPost]
-        public ActionResult DatHang(string ten, string email, string diachi, string sdt)
+        public ActionResult DatHang(string email, string diachi, string sdt)
         {
             if (Session["cart"] == null)
             {
@@ -67,8 +67,8 @@ namespace DullStore.Controllers
             }
             //them vao chi tiet gio hang
             KhachHang kh = new KhachHang();
-            KhachHang test=db.KhachHang.SingleOrDefault(x=>x.hoten==ten&&x.email==email&&x.diachi==diachi&&x.sodienthoai==sdt);
-            if (test!=null)
+            KhachHang test = db.KhachHang.SingleOrDefault(x => x.email == email);
+            if (test != null)
             {
                 kh.ma = test.ma;
                 kh.hoten = test.hoten;
@@ -76,15 +76,15 @@ namespace DullStore.Controllers
                 kh.email = test.email;
                 kh.diachi = test.diachi;
             }
-            else
+/*            else
             {
-                kh.hoten = ten;
+                kh.hoten = test.hoten;
+                kh.email = test.email;
                 kh.sodienthoai = sdt;
-                kh.email = email;
                 kh.diachi = diachi;
                 db.KhachHang.Add(kh);
                 db.SaveChanges();
-            }
+            }*/
             ShoppingCart cart = (ShoppingCart)Session["cart"];
             GioHang gh = new GioHang();
             gh.ngaydathang = DateTime.Now;
@@ -104,7 +104,9 @@ namespace DullStore.Controllers
                 db.SaveChanges();
             }
             ViewData["DonHang"] = gh;
+            
             return View();
+            
         }
     }
 }

@@ -42,6 +42,8 @@
 
         <h2>Tổng tiền là: @cart.tonggiatien()</h2>
     </div>
-        <a href="/Home/Index" class="shopBtn btn-large"><span class="icon-arrow-left"></span> Quay lại trang chủ</a>
+    <a href="/Home/Index" class="shopBtn btn-large" @{ cart = new ShoppingCart(); Session["cart"] = cart; }>
+        <span class="icon-arrow-left"></span> Quay lại trang chủ
+    </a>
 }
 

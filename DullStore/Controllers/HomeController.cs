@@ -5,6 +5,8 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -56,6 +58,89 @@ namespace DullStore.Controllers
             SanPhamDAO sp = new SanPhamDAO();
             ViewData["TimKiem"] = sp.listspTimkiem(tensp);
             return View();
+        }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(KhachHang kh)
+        {
+            if (ModelState.IsValid)
+            {
+                var check = db.KhachHang.FirstOrDefault(s => s.email == kh.email);
+                if(check == null)
+                {
+                    kh.password = GetMD5(kh.password);
+                    db.Configuration.ValidateOnSaveEnabled = false;
+                    db.KhachHang.Add(kh);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.error = "Tai khoan da ton tai";
+                    return View();
+                }
+            }
+            return View(kh);
+        }
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(string email, string password)
+        {
+            if (ModelState.IsValid)
+            {
+                var f_password = GetMD5(password);
+                var data = db.KhachHang.Where(s => s.email.Equals(email) && s.password.Equals(f_password)).ToList();
+                if (data.Count > 0)
+                {
+                    Session["FullName"] = data.FirstOrDefault().hoten;
+                    Session["Email"] = data.FirstOrDefault().email;
+                    Session["idUser"] = data.FirstOrDefault().ma;
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.error = "Login that bai";
+                    return RedirectToAction("Index");
+                }
+            }
+            return View();
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult UserInfo()
+        {
+            KhachHangDAO sp = new KhachHangDAO();
+            int makh = int.Parse(Session["idUser"].ToString());
+            List < GioHang > giohang = sp.listGioHang(makh);
+            return View(giohang);
+        }
+        public static string GetMD5(string str)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] fromData = Encoding.UTF8.GetBytes(str);
+            byte[] targetData = md5.ComputeHash(fromData);
+            string byte2String = null;
+
+            for (int i = 0; i < targetData.Length; i++)
+            {
+                byte2String += targetData[i].ToString("x2");
+
+            }
+            return byte2String;
         }
     }
 }

@@ -18,5 +18,19 @@ namespace DullStore.DAO
             var res = (from kh in db.KhachHang select kh);
             return res;
         }
+        public bool Login(string tk, string mk)
+        {
+            var res = db.KhachHang.Count(x => x.email == tk && x.password == mk);
+            if (res > 0)
+                return true;
+            else
+                return false;
+        }
+        public List<GioHang> listGioHang(int makhachhang)
+        {
+            string search = "select * from GioHang where makhachhang = " + makhachhang;
+            var rs = db.GioHang.SqlQuery(search).ToList();
+            return rs;
+        }
     }
 }

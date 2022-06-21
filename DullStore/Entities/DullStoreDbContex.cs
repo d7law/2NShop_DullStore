@@ -49,7 +49,9 @@ namespace DullStore.Entities
             modelBuilder.Entity<KhachHang>()
                 .Property(e => e.email)
                 .IsUnicode(false);
-
+            modelBuilder.Entity<KhachHang>()
+                .Property(e => e.password)
+                .IsUnicode(false);
             modelBuilder.Entity<KhachHang>()
                 .HasMany(e => e.GioHang)
                 .WithOptional(e => e.KhachHang)

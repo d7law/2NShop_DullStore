@@ -1,4 +1,5 @@
 ﻿@using DullStore.Bean
+
 @{
     Layout = null;
 }
@@ -12,6 +13,7 @@
     //cart.AddItem(0, "", 0, 0, "");
     Session["cart"] = cart;
 }
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +37,7 @@
     <![endif]-->
     <!-- Favicons -->
     <link rel="shortcut icon" href="/Content/MyStyle/assets/ico/favicon.ico">
+
 </head>
 <body>
     <!--
@@ -51,30 +54,45 @@
                         <a href="#"><span class="icon-tumblr"></span></a>
                     </div>
                     <a class="active" href="/Home/Index"> <span class="icon-home"></span> Trang chủ</a>
-                    <a href="#"><span class="icon-user"></span> Tài khoản của tôi</a>
-                    <a href="register.html"><span class="icon-edit"></span> Đăng ký </a>
+
+
                     <a href="/ShoppingCart/list"><span class="icon-shopping-cart"></span> @cart.tongsoluong() (Sản phẩm) - <span class="badge badge-warning"> @cart.tonggiatien() VNĐ</span></a>
-                    <ul class="nav pull-right">
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span>Đăng nhập<b class="caret"></b></a>
-                            <div class="dropdown-menu">
-                                <form class="form-horizontal loginFrm">
-                                    <div class="control-group">
-                                        <input type="text" class="span2" id="inputEmail" placeholder="Email">
-                                    </div>
-                                    <div class="control-group">
-                                        <input type="password" class="span2" id="inputPassword" placeholder="Password">
-                                    </div>
-                                    <div class="control-group">
-                                        <label class="checkbox">
-                                            <input type="checkbox"> Ghi nhớ tài khoản
-                                        </label>
-                                        <button type="submit" class="shopBtn btn-block"> Đăng nhập </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-                    </ul>
+                    @if (Session["Fullname"] == null)
+                    {
+                        <a href="/Home/Register"><span class="icon-edit"></span> Đăng ký </a>
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span>Đăng nhập<b class="caret"></b></a>
+                                <div class="dropdown-menu">
+                                    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <form class="form-horizontal loginFrm" style="margin:0px">
+                                            <div class="control-group" style="text-align:center">
+                                                <input type="text" class="span2" name="email" placeholder="Email">
+                                            </div>
+                                            <div class="control-group" style="text-align:center">
+                                                <input type="password" class="span2" name="password" placeholder="Password">
+                                            </div>
+                                            <div class="control-group" style="text-align:center; margin:0px">
+                                                <button type="submit" class="shopBtn btn-mini" value="Login"> Đăng nhập </button>
+                                            </div>
+                                        </form>
+                                    }
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <
+                        <a href="/Home/UserInfo"><span class="icon-user"></span>Xin chào @Session["Fullname"].ToString()</a>
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" href="@Url.Action("Logout","Home")">Đăng xuất<b class="caret"></b></a>
+                            </li>
+                        </ul>
+                    }
                 </div>
             </div>
         </div>
@@ -120,10 +138,10 @@
                         <span class="icon-bar"></span>
                     </a>
                     <div class="collapse nav-collapse">
-                        <ul class="nav nav-tabs">
-                            <li class="item active" id="curTab"><a href="~/Home/Index">Trang chủ	</a></li>
-                            <li class="item"><a href="~/Home/KMProduct">Khuyến mãi</a></li>
-                            <li class="item"><a href="~/Home/BCProduct">Bán chạy</a></li>
+                        <ul id="myTab" class="nav">
+                            <li class=""><a href="~/Home/Index">Trang chủ</a></li>
+                            <li class=""><a href="~/Home/KMProduct">Khuyến mãi</a></li>
+                            <li class=""><a href="~/Home/BCProduct">Bán chạy</a></li>
                         </ul>
                         @using (Html.BeginForm("timkiem", "Home", null, FormMethod.Post, new { style = "margin-right:10px; margin-bottom:0px", @class = "pull-right" }))
                         {
@@ -239,14 +257,14 @@
                     <a href="#">Hướng dẫn người mua</a><br>
                     <a href="#">Câu hỏi thường gặp</a><br>
                 </div>
-                <div class="span2">
+                <div class="span5">
                     <h6>Dành cho người bán </h6>
                     <a href="#">Quy định đối với nhân viên</a> <br>
                     <a href="#">Chính sách bán hàng</a><br>
                     <a href="#">Hệ thống tiêu chí kiểm duyệt</a><br>
                     <a href="#">Các mức chế tài vi phạm</a><br>
                 </div>
-                <div class="span6">
+                <div class="span3">
                     <h6>Copyright © 2022 2N</h6>
                     <p>Công ty Cổ phần HUFLIT</p>
                     <p>Địa chỉ: Huflit quận10</p>
@@ -261,9 +279,7 @@
             <span>Copyright 2022<br> Tập đoàn 2N Group</span>
         </div>
     </div>
-    <button id="click">
-        <i class="gotop icon-double-angle-up"></i>
-    </button>
+        <i class="gotop icon-double-angle-up" id="click"></i>
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="~/Content/MyStyle/assets/js/jquery.js"></script>
     <script src="~/Content/MyStyle/assets/js/bootstrap.min.js"></script>
@@ -280,21 +296,6 @@
             });
         });
     </script>
-    <script>
-        // Add active class to the current button (highlight it)
-        var header = document.getElementById("curTab");
-        var btns = header.getElementsByClassName("item");
-        for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function () {
-                var current = document.getElementsByClassName("active");
-                if (current.length > 0) {
-                    current[0].className = current[0].className.replace(" active", "");
-                }
-                this.className += " active";
-            });
-        }
-    </script>
-
 
 </body>
 </html>
