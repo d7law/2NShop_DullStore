@@ -76,6 +76,16 @@ namespace DullStore.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
+            string search = "select * from SanPham where mastyle = " + id;
+            var rs = db.SanPham.SqlQuery(search).ToList();
+            if (rs.Count() != 0)
+            {
+                foreach (SanPham sp in rs)
+                {
+                    db.SanPham.Remove(sp);
+                    db.SaveChanges();
+                }
+            }
             Style st = db.Style.Find(id);
             db.Style.Remove(st);
             db.SaveChanges();

@@ -32,11 +32,11 @@
                 IQueryable<SanPham> list = sp.ListSP(item.ma);
                 if (list.Count()==0)
                 {
-                    <a href="/QuanLyDanhMuc/Delete?id=@item.ma" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
+                    <a href="/QuanLyDanhMuc/Delete?id=@item.ma" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này? Việc này đồng nghĩa bạn cũng sẽ xóa hết các sản phẩm có trong danh mục này');">Xóa</a>
                 }
                 else
                 {
-                    <a href="/QuanLyDanhMuc/Delete?id=@item.ma" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
+                    <a href="/QuanLyDanhMuc/Delete?id=@item.ma" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này? Việc này đồng nghĩa bạn cũng sẽ xóa hết các sản phẩm có trong danh mục này');">Xóa</a>
                 }
             }
 

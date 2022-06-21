@@ -32,11 +32,11 @@
                 IQueryable<SanPham> list = sp.ListSPTL(item.ma);
                 if (list.Count() == 0)
                 {
-                    <a href="/QuanLyTheLoai/Delete?id=@item.ma" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại giày này?');">Xóa</a>
+                    <a class="btn btn-danger" href="/QuanLyTheLoai/Delete?id=@item.ma" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại giày này?');">Xóa</a>
                 }
                 else
                 {
-                    <a href="/QuanLyTheLoai/Delete?id=@item.ma" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại giày này?');" hidden="hidden">Xóa</a>
+                    <a class="btn btn-danger" href="/QuanLyTheLoai/Delete?id=@item.ma" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại giày này?  Việc này đồng nghĩa bạn cũng sẽ xóa hết các sản phẩm có trong style này');">Xóa</a>
                 }
             }
         </td>
